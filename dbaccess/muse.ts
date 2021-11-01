@@ -1,4 +1,5 @@
 import Realm from 'realm';
+import { MeSession } from './schema/user_8071911c5a57441f9c2afe3c6cd0e117-model';
 
 export class Database {
     config : Realm.Configuration
@@ -18,11 +19,35 @@ export class Database {
         return db
     }
 
-    public sleepSessions() {
+    public sleepSessions(cb : (session : Session) => void) {
         let sessions = this.realm.objects('MeSession')
             .filtered('type == "presleep"')
-        return sessions
+        
+        sessions.forEach((value, index, array) => {
+            cb(new Session(this.realm,value))
+        })
     }
+}
+
+export class Session {
+    realm : Realm
+    session : Realm.Object
+    meSession : MeSession
+    public constructor(r, s) {
+        this.realm = r
+        this.session = s
+        this.meSession = s
+    }
+
+    public startTime() : number {
+        return this.meSession.utcTimestamp
+    }
+
+    public durationSeconds() : number {
+        return this.meSession.completedSeconds
+    }
+
+
 }
 
 export default Database
