@@ -10,6 +10,7 @@ export class Database {
         this.dbPath = path;
         this.config = {
             path: this.dbPath,
+            readOnly: true,
         }
     }
 

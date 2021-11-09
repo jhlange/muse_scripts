@@ -1,9 +1,9 @@
 
-all: build run
+all: build export_data
 
 # Run
-run:
-	node build_charts.js
+export_data:
+	node export.js .. ..
 
 # Build
 build: deps
