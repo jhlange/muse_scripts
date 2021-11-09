@@ -2,8 +2,11 @@
 all: build export_data
 
 # Run
+build_charts:
+	node build_charts .. ../charts
+
 export_data:
-	node export.js .. ..
+	node export.js $(HOME)/Desktop ..
 
 # Build
 build: deps

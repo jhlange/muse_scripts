@@ -1,12 +1,11 @@
 import MuseDatabase from './dbaccess/muse';
-import os from 'os';
 import fs from 'fs';
 import path from 'path';
 import process from 'process';
 import chalk from 'chalk';
 
-var dataDir = "data";
-var noDataDir = "nodata";
+var dataDir = "data_detailed";
+var noDataDir = "data_summary";
 
 function main(database : MuseDatabase) {
     var i = 0;
@@ -19,7 +18,27 @@ function main(database : MuseDatabase) {
                 dir = dataDir;
             }
 
-            let fileName = '' + value.meSession.startDatetimeLocalWithTimezone + '_' + value.meSession.id + '.json';
+            let startTime = new Date(value.meSession.startDatetimeLocalWithTimezone)
+            //let intlDateObj = new Intl.DateTimeFormat('en-US', {
+            //    timeZone: "America/New_York"
+            //});
+            //let nyTime = intlDateObj.format(startTime)
+            //startTime = new Date(nyTime)
+
+            // 2021_0805_101055
+            let year = startTime.getFullYear()
+            let month = '' + (startTime.getMonth() + 1);
+            if (month.length < 2) month = '0' + month;
+            let day = '' + (startTime.getDate());
+            if (day.length < 2) day = '0' + day;
+            let hour = '' + (startTime.getHours() + 1);
+            if (hour.length < 2) hour = '0' + hour
+            let minutes = '' + (startTime.getMinutes() + 1);
+            if (minutes.length < 2) minutes = '0' + minutes;
+            let seconds = '' + (startTime.getSeconds() + 1);
+            if (seconds.length < 2) seconds = '0' + seconds;
+            let formatted = `${year}_${month}${day}_${hour}${minutes}${seconds}`;
+            let fileName = formatted + '_' + value.meSession.id + '.json';
             let filePath = path.join(dir, fileName)
             let data = JSON.stringify(value.session.toJSON(), null, '\t')
             fs.writeFileSync(filePath, data, {flag: "w"})
