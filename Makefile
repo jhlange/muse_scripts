@@ -1,4 +1,10 @@
 
+ifdef joshua_lange
+DB_DATA=$(HOME)/Desktop
+else
+DB_DATA=..
+endif
+
 all: build export_data
 
 # Run
@@ -6,7 +12,7 @@ build_charts:
 	node build_charts .. ../charts
 
 export_data:
-	node export.js $(HOME)/Desktop ..
+	node export.js $(DB_DATA) ..
 
 # Build
 build: deps
