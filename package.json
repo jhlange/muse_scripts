@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "chalk": "^4.1.2",
     "realm": "^10.9.1"
   }
 }
