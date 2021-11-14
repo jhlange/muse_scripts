@@ -54,20 +54,27 @@ class SessionIterator {
         }
 
         // Then, return the current file
-        if (this.dataFilesIndex > this.dataFiles.length &&
-            this.dataFiles[this.dataFilesIndex] > this.currentFile) {
+        let nextNoDataFile = '';
+        if (this.noDataFilesIndex < this.noDataFiles.length) {
+            nextNoDataFile = this.noDataFiles[this.noDataFilesIndex]
+        }
+
+        if (this.dataFilesIndex < this.dataFiles.length &&
+            this.dataFiles[this.dataFilesIndex] > this.currentFile &&
+            this.dataFiles[this.dataFilesIndex] < nextNoDataFile) {
                 this.currentFile = this.dataFiles[this.dataFilesIndex];
                 this.currentFilePath = path.join(this.dataFilePath, this.currentFile);
                 return true;
         }
 
-        if (this.noDataFilesIndex > this.noDataFiles.length &&
+        if (this.noDataFilesIndex < this.noDataFiles.length &&
             this.noDataFiles[this.noDataFilesIndex] > this.currentFile) {
                 this.currentFile = this.noDataFiles[this.noDataFilesIndex];
                 this.currentFilePath = path.join(this.noDataFilePath, this.currentFile);
                 return true;
         }
 
+        // No more files
         return false
     }
 
@@ -77,6 +84,23 @@ class SessionIterator {
         return obj;
     }
 }
+
+class Day {
+    
+}
+
+class DayIterator {
+    sessions: SessionIterator
+    constructor(dataFilePath: string, noDataFilePath: string) {
+        this.sessions = new SessionIterator(dataFilePath, noDataFilePath);
+    }
+
+    public current() : Day {
+        return null;
+    }
+}
+
+
 
 function main() {
     let iter = new SessionIterator(dataPath, noDataPath);

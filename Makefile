@@ -1,4 +1,3 @@
-
 ifdef joshua_lange
 DB_DATA=$(HOME)/Desktop
 else
