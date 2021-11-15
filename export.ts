@@ -4,8 +4,8 @@ import path from 'path';
 import process from 'process';
 import chalk from 'chalk';
 
-var dataDir = "data_detailed";
-var noDataDir = "data_summary";
+var dataDir = "extracted/data_detailed";
+var noDataDir = "extracted/data_summary";
 
 function main(database : MuseDatabase) {
     var i = 0;
@@ -116,9 +116,9 @@ if (process.argv.length < 4) {
 dbPath = process.argv[2];
 
 dataDir = path.join(process.argv[3], dataDir);
-if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir);
+if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, {"recursive": true});
 noDataDir = path.join(process.argv[3], noDataDir);
-if (!fs.existsSync(noDataDir)) fs.mkdirSync(noDataDir);
+if (!fs.existsSync(noDataDir)) fs.mkdirSync(noDataDir, {"recursive": true});
 
 
 dbs = find_dbs(dbPath);

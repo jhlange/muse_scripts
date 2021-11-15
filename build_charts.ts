@@ -4,8 +4,8 @@ import path from 'path';
 import process from 'process';
 import chalk from 'chalk';
 
-var dataPath = "data_detailed";
-var noDataPath = "data_summary";
+var dataPath = "extracted/data_detailed";
+var noDataPath = "extracted/data_summary";
 var outputDir = "..";
 
 class SessionIterator {
